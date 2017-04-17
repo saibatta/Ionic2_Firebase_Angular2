@@ -10,16 +10,18 @@ import { ChatsPage } from '../pages/chats/chats';
 import { AccountPage } from '../pages/account/account';
 import { ChatViewPage } from '../pages/chat-view/chat-view';
 
+import { SignUpPage } from '../pages/sign-up/sign-up';
+
 import { AuthProvider } from '../providers/auth-provider/auth-provider';
 import { ChatsProvider } from '../providers/chats-provider/chats-provider';
 import { UserProvider } from '../providers/user-provider/user-provider';
 import { UtilProvider } from '../providers/utils';
 
 export const firebaseConfig = {
-  apiKey: "",
-  authDomain: "",
-  databaseURL: "",
-  storageBucket: "",
+  apiKey: "AIzaSyBswrLgT6Vs4yGgBiKiqTRSewLL9jlMU7A",
+  authDomain: "fir-chat-67328.firebaseapp.com",
+  databaseURL: "https://fir-chat-67328.firebaseio.com",
+  storageBucket: "fir-chat-67328.appspot.com",
 };
 
 
@@ -37,7 +39,8 @@ const myFirebaseAuthConfig = {
     UsersPage,
     ChatsPage,
     AccountPage,
-    ChatViewPage
+    ChatViewPage,
+    SignUpPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -51,7 +54,8 @@ const myFirebaseAuthConfig = {
     UsersPage,
     ChatsPage,
     AccountPage,
-    ChatViewPage
+    ChatViewPage,
+    SignUpPage
   ],
   providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler },
     AuthProvider, ChatsProvider, UserProvider, UtilProvider, Storage]

@@ -8,6 +8,10 @@ import { AuthProvider } from '../../providers/auth-provider/auth-provider';
 import { UserProvider } from '../../providers/user-provider/user-provider';
 import { UtilProvider } from '../../providers/utils';
 
+import { SignUpPage } from '../../pages/sign-up/sign-up';
+
+
+
 @Component({
 	templateUrl: 'login.html'
 })
@@ -39,14 +43,16 @@ export class LoginPage {
     };
     
     createAccount() {
-        let credentials = this.loginForm.value;
-        this.auth.createAccount(credentials)
-        .then((data) => {
-           this.storage.set('uid', data.uid);
-           this.userProvider.createUser(credentials, data.uid);
-        }, (error) => {
-            let alert = this.util.doAlert("Error",error.message,"Ok");
-            alert.present();
-        });
+
+        this.nav.push(SignUpPage);
+        // let credentials = this.loginForm.value;
+        // this.auth.createAccount(credentials)
+        // .then((data) => {
+        //    this.storage.set('uid', data.uid);
+        //    this.userProvider.createUser(credentials, data.uid);
+        // }, (error) => {
+        //     let alert = this.util.doAlert("Error",error.message,"Ok");
+        //     alert.present();
+        // });
     };
 }

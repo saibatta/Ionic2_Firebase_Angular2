@@ -1,0 +1,69 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>sign-up</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content class="padding">
+  <form [formGroup]="signupForm">
+    <ion-list>
+
+      <ion-item>
+        <ion-label floating>UserName</ion-label>
+        <ion-input type="text" formControlName="username"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="text" formControlName="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Confirm Password</ion-label>
+        <ion-input type="password" formControlName="cnfpassword"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>First Name</ion-label>
+        <ion-input type="text" formControlName="firstname"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Last Name</ion-label>
+        <ion-input type="text" formControlName="lastname"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Mobile No</ion-label>
+        <ion-input type="number" formControlName="mobno"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Date of Birth</ion-label>
+        <ion-input type="date" formControlName="dob"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Gender</ion-label>
+        <ion-input type="text" formControlName="gender"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Country</ion-label>
+        <ion-input type="text" formControlName="country"></ion-input>
+      </ion-item>
+
+    </ion-list>
+
+    <div padding>
+      <button ion-button primary block (click)="createAccount()" [disabled]="!signupForm.valid">Sign In</button>
+    </div>
+  </form>
+</ion-content>
