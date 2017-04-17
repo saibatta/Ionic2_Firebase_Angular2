@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="padding">
+  <form [formGroup]="loginForm">
+    <ion-list>
+
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="text" formControlName="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <div padding>
+      <button ion-button primary block (click)="signin()" [disabled]="!loginForm.valid">Sign In</button>
+    </div>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <button ion-button clear  (click)="forgotPassword()">     
+          Forgot Password?</button>
+        </ion-col>
+        <ion-col>
+          <button ion-button clear  (click)="createAccount()">         
+         Sign Up</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
