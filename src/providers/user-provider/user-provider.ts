@@ -14,7 +14,7 @@ export class UserProvider {
   
   // Create User in Firebase
   createUser(userCredentails, uid) {
-      let currentUserRef = this.af.database.object(`/users/${uid}`);
+      let currentUserRef = this.af.database.object(`/usersList/${uid}`);
       console.log(userCredentails);
       currentUserRef.set({email: userCredentails.email});
   }
@@ -23,14 +23,14 @@ export class UserProvider {
   getUser() {
     // Getting UID of Logged In User
     return this.getUid().then(uid => {
-      return this.af.database.object(`/users/${uid}`);
+      return this.af.database.object(`/usersList/${uid}`);
     });
   }
 
   
   // Get All Users of App
   getAllUsers() {
-      return this.af.database.list('/users');
+      return this.af.database.list('/usersList');
   }
    
   // Get base64 Picture of User
@@ -57,7 +57,7 @@ export class UserProvider {
   // Update Provide Picture of User
   updatePicture() {
     this.getUid().then(uid => {
-      let pictureRef = this.af.database.object(`/users/${uid}/picture`);
+      let pictureRef = this.af.database.object(`/usersList/${uid}/picture`);
       this.getPicture()
       .then((image) => {
           pictureRef.set(image);

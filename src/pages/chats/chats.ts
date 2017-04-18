@@ -21,18 +21,18 @@ export class ChatsPage {
             .then(chats => {
                 this.chats = chats.map(users => {
                     return users.map(user => {
-                        user.info = this.af.database.object(`/users/${user.$key}`);
-                        return user;
+                        user.info = this.af.database.object(`/usersList/${user.$key}`);
+                       return user;
                     });
                 });
             });
         }
     
     
-    openChat(key) {
+    openChat(key,chat) {
         this.userProvider.getUid()
         .then(uid => {
-            let param = {uid: uid, interlocutor: key};
+            let param = {uid: uid, interlocutor: key,chat:chat};
             this.nav.push(ChatViewPage,param);
         });   
     }
