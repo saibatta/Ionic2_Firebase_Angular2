@@ -1,7 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
+import { AngularFireModule, AuthProviders, AuthMethods, AngularFire, FirebaseApp } from 'angularfire2';
 import { MyApp } from './app.component';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
@@ -11,6 +11,7 @@ import { AccountPage } from '../pages/account/account';
 import { ChatViewPage } from '../pages/chat-view/chat-view';
 
 import { SignUpPage } from '../pages/sign-up/sign-up';
+import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password'
 
 import { AuthProvider } from '../providers/auth-provider/auth-provider';
 import { ChatsProvider } from '../providers/chats-provider/chats-provider';
@@ -40,7 +41,8 @@ const myFirebaseAuthConfig = {
     ChatsPage,
     AccountPage,
     ChatViewPage,
-    SignUpPage
+    SignUpPage,
+    ForgotPasswordPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -55,7 +57,8 @@ const myFirebaseAuthConfig = {
     ChatsPage,
     AccountPage,
     ChatViewPage,
-    SignUpPage
+    SignUpPage,
+    ForgotPasswordPage
   ],
   providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler },
     AuthProvider, ChatsProvider, UserProvider, UtilProvider, Storage]

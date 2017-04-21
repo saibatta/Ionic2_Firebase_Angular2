@@ -33,9 +33,7 @@ export class ChatViewPage {
         // Get Chat Reference
         chatsProvider.getChatRef(this.uid, this.interlocutor)
             .then((chatRef: any) => {
-                alert("new message")
                 this.chats = this.af.database.list(chatRef);
-                
             });
     }
 

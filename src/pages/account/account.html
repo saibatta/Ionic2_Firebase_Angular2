@@ -1,11 +1,13 @@
 <ion-header>
     <ion-navbar color="primary">
-        <ion-title>Account</ion-title>   
+        <ion-title *ngIf="user">Account {{user.firstname}}</ion-title> 
+         <!--<span>{{(chat.info | async).email}}</span>  -->
     </ion-navbar>
 </ion-header>
 
+
 <ion-content>
-    <ion-list>
+    <ion-list >
         <ion-card>
             <img *ngIf="!user.picture" src="assets/images/image2.jpg"/>
             <img *ngIf="user.picture" src="{{user.picture}}"/>
