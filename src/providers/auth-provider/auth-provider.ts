@@ -4,18 +4,20 @@ import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class AuthProvider {
-  constructor(public af:AngularFire, public local:Storage) {}
-  
-  signin(credentails) {   
+  constructor(public af: AngularFire, public local: Storage) { }
+
+  signin(credentails) {
     return this.af.auth.login(credentails);
   }
-  
+
   createAccount(credentails) {
     return this.af.auth.createUser(credentails);
   };
-  
+
   logout() {
-      return this.af.auth.logout();
+    return this.af.auth.logout();
   }
+
+
 }
 

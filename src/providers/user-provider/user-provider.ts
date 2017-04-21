@@ -2,23 +2,31 @@ import { Injectable } from '@angular/core';
 import { AngularFire } from 'angularfire2';
 import { Storage } from '@ionic/storage';
 import { Camera } from 'ionic-native';
+import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 
 @Injectable()
 export class UserProvider {
-  constructor(public af:AngularFire, public local:Storage) { }
-  
+
+  public onlineList: FirebaseListObservable<any>;
+  public currentUserOnlineRef;
+  public amOnline: FirebaseObjectObservable<any>;
+  public userRef: FirebaseListObservable<any>;
+  public lastOnlineRef: FirebaseListObservable<any>;
+
+  constructor(public af: AngularFire, public local: Storage) { }
+
   // Get Current User's UID
   getUid() {
     return this.local.get('uid');
   }
-  
+
   // Create User in Firebase
   createUser(userCredentails, uid) {
-      let currentUserRef = this.af.database.object(`/usersList/${uid}`);
-      console.log(userCredentails);
-      currentUserRef.set({email: userCredentails.email});
+    let currentUserRef = this.af.database.object(`/usersList/${uid}`);
+    console.log(userCredentails);
+    currentUserRef.set({ email: userCredentails.email, data: userCredentails });
   }
-  
+
   // Get Info of Single User
   getUser() {
     // Getting UID of Logged In User
@@ -27,41 +35,60 @@ export class UserProvider {
     });
   }
 
-  
+
   // Get All Users of App
   getAllUsers() {
-      return this.af.database.list('/usersList');
+    return this.af.database.list('/usersList');
   }
-   
+
   // Get base64 Picture of User
   getPicture() {
-      let base64Picture;
-      let options = {
-          destinationType: 0,
-          sourceType: 0,
-          encodingType:0  
-      };
-      
-      let promise = new Promise((resolve, reject) => {
-           Camera.getPicture(options).then((imageData) => {
-                base64Picture = "data:image/jpeg;base64," + imageData;
-                resolve(base64Picture);
-            }, (error) => {
-                reject(error);
-          });
-      
+    let base64Picture;
+    let options = {
+      destinationType: 0,
+      sourceType: 0,
+      encodingType: 0
+    };
+
+    let promise = new Promise((resolve, reject) => {
+      Camera.getPicture(options).then((imageData) => {
+        base64Picture = "data:image/jpeg;base64," + imageData;
+        resolve(base64Picture);
+      }, (error) => {
+        reject(error);
       });
-      return promise;
+
+    });
+    return promise;
   }
-  
+
   // Update Provide Picture of User
   updatePicture() {
     this.getUid().then(uid => {
       let pictureRef = this.af.database.object(`/usersList/${uid}/picture`);
       this.getPicture()
-      .then((image) => {
+        .then((image) => {
           pictureRef.set(image);
-      });
+        });
+    });
+  }
+
+
+  userStatus(userid) {
+    this.amOnline = this.af.database.object('.info/connected');
+    this.userRef = this.af.database.list(`/usersList/${userid}/presence`);
+    // stores the timestamp of my last disconnect (the last time I was seen online)
+    this.lastOnlineRef = this.af.database.list(`/usersList/${userid}/lastseen`);
+    this.amOnline.subscribe((snapshot) => {
+      if (snapshot.$value) {
+        this.userRef.push(true).onDisconnect().remove();
+       // this.userRef.push(true).onDisconnect().update(false);
+
+        var timeStamp = Math.floor(Date.now() / 1000);
+        this.lastOnlineRef.push(timeStamp).onDisconnect();
+      } else {
+        // this.userRef.push(false).onDisconnect().update(false);
+      }
     });
   }
 }

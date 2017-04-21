@@ -24,12 +24,12 @@ export class UsersPage {
             });
     };
 
-userStatus(key){    
-  this.chatsProvidervalue = this.chatsProvider.userStatus(key);
-//  alert(this.chatsProvidervalue )
-  return this.chatsProvidervalue;
+    userStatus(key) {
+        this.chatsProvidervalue = this.userProvider.userStatus(key);
+        //  alert(this.chatsProvidervalue )
+        return this.chatsProvidervalue;
 
-}
+    }
 
 
     openChat(key, chat) {
