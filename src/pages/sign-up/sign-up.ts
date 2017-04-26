@@ -38,17 +38,19 @@ export class SignUpPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad SignUpPage');
   }
-  
+
   createAccount() {
     let credentials = this.signupForm.value;
     this.auth.createAccount(credentials)
       .then((data) => {
         this.storage.set('uid', data.uid);
         this.userProvider.createUser(credentials, data.uid);
+
+        this.userProvider.loginStatus(data.uid);
+
       }, (error) => {
         let alert = this.util.doAlert("Error", error.message, "Ok");
         alert.present();
       });
-
   }
 }

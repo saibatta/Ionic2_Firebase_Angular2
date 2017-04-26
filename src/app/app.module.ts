@@ -11,12 +11,16 @@ import { AccountPage } from '../pages/account/account';
 import { ChatViewPage } from '../pages/chat-view/chat-view';
 
 import { SignUpPage } from '../pages/sign-up/sign-up';
-import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password'
-
+import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
+import { UserDetailsPage } from '../pages/user-details/user-details';
 import { AuthProvider } from '../providers/auth-provider/auth-provider';
 import { ChatsProvider } from '../providers/chats-provider/chats-provider';
 import { UserProvider } from '../providers/user-provider/user-provider';
 import { UtilProvider } from '../providers/utils';
+
+import { IonicImageViewerModule } from 'ionic-img-viewer';
+
+import { MessageCounts } from '../pipes/message-counts'
 
 export const firebaseConfig = {
   apiKey: "AIzaSyBswrLgT6Vs4yGgBiKiqTRSewLL9jlMU7A",
@@ -42,11 +46,14 @@ const myFirebaseAuthConfig = {
     AccountPage,
     ChatViewPage,
     SignUpPage,
-    ForgotPasswordPage
+    ForgotPasswordPage,
+    UserDetailsPage,
+    MessageCounts
   ],
   imports: [
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
+    AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
+    IonicImageViewerModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -58,7 +65,8 @@ const myFirebaseAuthConfig = {
     AccountPage,
     ChatViewPage,
     SignUpPage,
-    ForgotPasswordPage
+    ForgotPasswordPage,
+    UserDetailsPage
   ],
   providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler },
     AuthProvider, ChatsProvider, UserProvider, UtilProvider, Storage]

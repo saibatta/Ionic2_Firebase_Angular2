@@ -11,7 +11,7 @@ import { ChatsProvider } from '../../providers/chats-provider/chats-provider';
 })
 export class UsersPage {
     users: FirebaseListObservable<any[]>;
-    chatsProvidervalue: any;
+    chatsProvidervalue: FirebaseListObservable<any[]>;
     uid: string;
     constructor(public nav: NavController, public userProvider: UserProvider, public chatsProvider: ChatsProvider) { }
 
@@ -20,17 +20,9 @@ export class UsersPage {
             .then(uid => {
                 this.uid = uid;
                 this.users = this.userProvider.getAllUsers();
-                // this.chatsProvidervalue = this.chatsProvider.userStatus();
+
             });
     };
-
-    userStatus(key) {
-        this.chatsProvidervalue = this.userProvider.userStatus(key);
-        //  alert(this.chatsProvidervalue )
-        return this.chatsProvidervalue;
-
-    }
-
 
     openChat(key, chat) {
         let param = { uid: this.uid, interlocutor: key, chat: chat, pageFrom: true };

@@ -11,9 +11,6 @@ import { UtilProvider } from '../../providers/utils';
 import { SignUpPage } from '../../pages/sign-up/sign-up';
 import { ForgotPasswordPage } from '../../pages/forgot-password/forgot-password';
 
-
-
-
 @Component({
     templateUrl: 'login.html'
 })
@@ -38,8 +35,11 @@ export class LoginPage {
             .then((data) => {
                 console.log(data)
                 this.storage.set('uid', data.uid);
+                this.userProvider.loginStatus(data.uid);
 
-                this.userProvider.userStatus(data.uid);
+                // this.userID = user.$key;
+
+                this.auth.userStuatus(data.uid)
 
                 this.nav.push(TabsPage);
             }, (error) => {
@@ -55,8 +55,5 @@ export class LoginPage {
 
     forgotPassword() {
         this.nav.push(ForgotPasswordPage)
-        // let alert = this.util.doAlert("Message", 'Inprogress....', "Thanks");
-        //alert.present();
-
     }
 }
