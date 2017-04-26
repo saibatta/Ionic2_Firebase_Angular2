@@ -15,6 +15,12 @@ export class ChatsProvider {
         });
     }
 
+    // get list of Chats of a Logged In User
+    getChatsList() {
+        let chats = this.af.database.list(`/chats`);
+        return chats;
+    }
+
     // Add Chat References to Both users
     addChats(uid, interlocutor) {
         // First User
@@ -27,21 +33,21 @@ export class ChatsProvider {
     }
 
     getChatRef(uid, interlocutor) {
-        let firstRef = this.af.database.object(`/chats/${uid},${interlocutor}`, { preserveSnapshot: true });
+        let firstRef = this.af.database.object(`/chats`, { preserveSnapshot: true });
         let promise = new Promise((resolve, reject) => {
             firstRef.subscribe(snapshot => {
                 let a = snapshot.exists();
                 if (a) {
-                    resolve(`/chats/${uid},${interlocutor}`);
+                    resolve(`/chats`);
                 } else {
-                    let secondRef = this.af.database.object(`/chats/${interlocutor},${uid}`, { preserveSnapshot: true });
+                    let secondRef = this.af.database.object(`/chats`, { preserveSnapshot: true });
                     secondRef.subscribe(snapshot => {
                         let b = snapshot.exists();
                         if (!b) {
                             this.addChats(uid, interlocutor);
                         }
                     });
-                    resolve(`/chats/${interlocutor},${uid}`);
+                    resolve(`/chats`);
                 }
             });
         });

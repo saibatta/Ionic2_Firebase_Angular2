@@ -10,7 +10,7 @@ export class UserProvider {
   public onlineList: FirebaseListObservable<any>;
   public currentUserOnlineRef;
   public amOnline: FirebaseObjectObservable<any>;
-  public userRef: FirebaseListObservable<any>;
+  public userRef: FirebaseObjectObservable<any>;
   public lastOnlineRef: FirebaseListObservable<any>;
 
   constructor(public af: AngularFire, public local: Storage) { }
@@ -24,7 +24,7 @@ export class UserProvider {
   createUser(userCredentails, uid) {
     let currentUserRef = this.af.database.object(`/usersList/${uid}`);
     console.log(userCredentails);
-    currentUserRef.set({ email: userCredentails.email, data: userCredentails });
+    currentUserRef.set({ email: userCredentails.email, data: userCredentails,status:'offline' });
   }
 
   // Get Info of Single User
@@ -74,22 +74,24 @@ export class UserProvider {
   }
 
 
-  userStatus(userid) {
-    this.amOnline = this.af.database.object('.info/connected');
-    this.userRef = this.af.database.list(`/usersList/${userid}/presence`);
-    // stores the timestamp of my last disconnect (the last time I was seen online)
-    this.lastOnlineRef = this.af.database.list(`/usersList/${userid}/lastseen`);
-    this.amOnline.subscribe((snapshot) => {
-      if (snapshot.$value) {
-        this.userRef.push(true).onDisconnect().remove();
-       // this.userRef.push(true).onDisconnect().update(false);
 
-        var timeStamp = Math.floor(Date.now() / 1000);
-        this.lastOnlineRef.push(timeStamp).onDisconnect();
-      } else {
-        // this.userRef.push(false).onDisconnect().update(false);
-      }
-    });
+  loginStatus(userid) {
+    this.userRef = this.af.database.object(`/usersList/${userid}`, { preserveSnapshot: true });
+    this.userRef.update({ status: 'online' });
   }
+
+
+
+  logoutStatus(userid) {
+    this.userRef = this.af.database.object(`/usersList/${userid}`, { preserveSnapshot: true });   
+    this.userRef.update({ status: 'offline' });
+  }
+
+
+  userStatus() {
+    this.userRef = this.af.database.object(`/usersList`);
+  }
+
+
 }
 

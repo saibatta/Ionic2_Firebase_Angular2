@@ -10,15 +10,17 @@
 <ion-content>
   <ion-list>
     <span *ngFor="let user of users | async">
-        <a ion-item (click)="openChat(user.$key,user.email)" *ngIf="user.$key !== uid">
+        <a  (click)="openChat(user.$key,user)" *ngIf="user.$key !== uid">
+             <ion-item>
              <ion-avatar item-left>
-                <img *ngIf="!user.picture" src="assets/images/image2.jpg">
-                <img *ngIf="user.picture" src="{{user.picture}}">
-             </ion-avatar>
-             <h2>{{user.email}}</h2>
-              <!--<h2>{{userStatus(user.$key)}}</h2>-->
-
-           
+                <img *ngIf="!user.picture" src="assets/images/image2.jpg" imageViewer/>
+                <img *ngIf="user.picture" src="{{user.picture}}" imageViewer/>
+             </ion-avatar>               
+                {{user.email}}
+                  <ion-badge item-right *ngIf="user.status=='offline'" color="danger">{{user.status}}</ion-badge>
+                   <ion-badge item-right *ngIf="user.status=='online'" color="secondary">{{user.status}}</ion-badge>
+                </ion-item>
+              <!--<h2>{{userStatus(user.$key)}}</h2>-->           
         </a>
       </span>
   </ion-list>

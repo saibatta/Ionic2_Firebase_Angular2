@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title *ngIf="userPageName">{{userData.data.username}}</ion-title>
+    <ion-title *ngIf="!userPageName">{{(userData.info | async).data.username}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <div *ngIf="userPageName">
+    <ion-card>
+      <img *ngIf="!userData.data.picture" src="assets/images/image2.jpg" />
+      <img *ngIf="userData.data.picture" src="{{userData.data.picture}}" />
+    </ion-card>
+    <ion-item>
+      <p> First Name: {{userData.data.firstname}}</p>
+      <p> Last Name: {{userData.data.lastname}}</p>
+      <p> Gender: {{userData.data.gender}}</p>
+      <p> Country: {{userData.data.country}}</p>
+    </ion-item>
+  </div>
+
+  <div *ngIf="!userPageName">
+    <ion-card>
+      <img *ngIf="!(userData.info | async).data.picture" src="assets/images/image2.jpg" />
+      <img *ngIf="(userData.info | async).data.picture" src="{{(userData.info | async).data.picture}}" />
+    </ion-card>
+    <ion-item>
+      <p> User Name: {{(userData.info | async).data.username}}</p>
+      <p> First Name: {{(userData.info | async).data.firstname}}</p>
+      <p> Last Name: {{(userData.info | async).data.lastname}}</p>
+      <p> Gender: {{(userData.info | async).data.gender}}</p>
+      <p> Country: {{(userData.info | async).data.country}}</p>
+    </ion-item>
+  </div>
+
+</ion-content>

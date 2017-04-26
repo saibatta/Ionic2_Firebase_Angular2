@@ -1,17 +1,22 @@
 <ion-header>
-  <ion-navbar color="primary">
-    <ion-title *ngIf="!pageName">{{(chatName.info | async).email}}</ion-title>
-    <ion-title *ngIf="pageName">{{chatName}}</ion-title>
-    <!--<ion-buttons end>
-      <button ion-button (click)="sendPicture()"><ion-icon name="image" ></ion-icon> Send Image</button>
-    </ion-buttons>-->
+  <ion-navbar color="light" (click)="userDetails(chatName,pageName)">
+    <ion-item no-lines>
+      <ion-avatar item-left>
+        <img src="assets/images/image2.jpg" imageViewer>
+      </ion-avatar>
+      <h2 *ngIf="!pageName">{{(chatName.info | async).email}}</h2>
+      <h2 *ngIf="pageName">{{chatName.email}}</h2>
+      <p *ngIf="!pageName">{{(chatName.info | async).status}}</p>
+      <p *ngIf="pageName">{{chatName.status}}</p>
+    </ion-item>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding class="chat-view" id="chat-view">
+<ion-content padding class="chat-view text-content" style="background-color:#dbeaf9" id="chat-view">
   <div class="messages">
     <div class="message" *ngFor="let chat of chats | async" [ngClass]="{'me': uid === chat.from}">
-      <span *ngIf="chat.message">{{chat.message}}</span>
+      <span *ngIf="chat.message">{{chat.message  }}</span>
+
       <img *ngIf="chat.picture" src="{{chat.picture}}" class="picture">
     </div>
   </div>
@@ -23,7 +28,6 @@
       <ion-col width-10>
         <ion-spinner *ngIf="!(chats)"></ion-spinner>
       </ion-col>
-
       <ion-col width-70 [hidden]="!chats">
         <ion-input type="text" placeholder="Enter Message" [(ngModel)]="message">
         </ion-input>

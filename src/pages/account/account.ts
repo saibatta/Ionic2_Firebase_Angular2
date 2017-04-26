@@ -17,6 +17,7 @@ import "rxjs/add/operator/first";
 export class AccountPage {
     rootNav;
     user = {};
+    userID;
     constructor(public nav: NavController,
         public auth: AuthProvider,
         public userProvider: UserProvider,
@@ -28,6 +29,8 @@ export class AccountPage {
                 userObservable.subscribe(user => {
                     this.user = user.data;
                     console.log(user)
+                    this.userID = user.$key;
+
                 });
             });
 
@@ -38,8 +41,7 @@ export class AccountPage {
         this.userProvider.updatePicture();
     };
     logout(): void {
-       // this.userProvider.userStatus(this.local.get('uid'));
-        this.local.get('uid')
+        this.userProvider.logoutStatus(this.userID);
         this.local.remove('uid');
         this.auth.logout();
 
